@@ -1,0 +1,42 @@
+/* ChatInput.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align items to the bottom */
+  width: 100%;
+  position: fixed; /* Fix the chat input box at the bottom of the container */
+  bottom: 0; /* Place it at the bottom of the container */
+}
+
+.chatForm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #ccc;
+  padding: 10px 0;
+  width: 100%; /* Make sure it stretches to 100% width */
+  background-color: #fff; /* Add a background color */
+}
+
+.inputField {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  margin-right: 10px; /* Add margin between the input field and the button */
+}
+
+.sendButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.sendButton:hover {
+  background-color: #0056b3;
+}
