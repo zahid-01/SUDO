@@ -4,6 +4,7 @@ import axios from "axios";
 
 import API_BASE_URL from "../../config/api";
 import styles from "./LoginPage.module.css";
+import { socket } from "../../socket";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const LoginPage = () => {
 
     console.log(res);
     if (res.data.status === "Success") {
+      socket.connect();
       navigate("/chat");
     }
   };
