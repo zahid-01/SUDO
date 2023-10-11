@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Chat.module.css";
 import ChatCard from "./ChatCard";
 import { socket } from "../../socket";
@@ -19,16 +19,22 @@ const Chat = () => {
     }
   };
 
-  socket.on("my message", (msg) => {
-    console.log("jolaaa");
-    setTexts((oldTexts) => [...oldTexts, msg]);
-  });
+  useEffect(() => {
+    const newMessageHandler = (msg) => {
+      setTexts((oldTexts) => [...oldTexts, msg]);
+    };
+    socket.on("my_message", newMessageHandler);
+  }, []);
 
   return (
     <>
-      {texts.map((text) => (
-        <ChatCard title={"User"} content={text} />
-      ))}
+      <ul>
+        {texts.map((text) => (
+          <li key={Math.random()}>
+            <ChatCard title={"User"} content={text} />
+          </li>
+        ))}
+      </ul>
       <div className={styles.container}>
         <form className={styles.chatForm} onSubmit={handleSubmit}>
           <input
@@ -38,7 +44,7 @@ const Chat = () => {
             value={message}
             onChange={handleMessageChange}
           />
-          <button type="submit" className={styles.sendButton}>
+          <button onClick={handleSubmit} className={styles.sendButton}>
             Send
           </button>
         </form>

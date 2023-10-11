@@ -30,7 +30,6 @@ const LoginPage = () => {
       },
     });
 
-    console.log(res);
     if (res.data.status === "Success") {
       socket.connect();
       navigate("/chat");
