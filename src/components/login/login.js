@@ -10,6 +10,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -23,11 +24,15 @@ const LoginPage = () => {
     e.preventDefault();
     const res = await axios({
       method: "POST",
-      url: `${API_BASE_URL}/`,
+      url: `${API_BASE_URL}/api/v1/login`,
       data: {
         email,
         password,
       },
+      withCredentials: true,
+    }).catch((e) => {
+      setLoginError(true);
+      return;
     });
 
     if (res.data.status === "Success") {
@@ -39,6 +44,7 @@ const LoginPage = () => {
   return (
     <div className={styles.container}>
       <form className={styles.loginForm} onSubmit={handleSubmit}>
+        {loginError && <p>Error</p>}
         <h2>Login</h2>
         <div className={styles.formGroup}>
           <label htmlFor="email">Email:</label>
@@ -48,7 +54,6 @@ const LoginPage = () => {
             name="email"
             value={email}
             onChange={handleEmailChange}
-            // required
           />
         </div>
         <div className={styles.formGroup}>
@@ -59,7 +64,6 @@ const LoginPage = () => {
             name="password"
             value={password}
             onChange={handlePasswordChange}
-            // required
           />
         </div>
         <button type="submit" className={styles.submitButton}>

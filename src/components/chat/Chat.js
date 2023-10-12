@@ -21,9 +21,14 @@ const Chat = () => {
 
   useEffect(() => {
     const newMessageHandler = (msg) => {
+      console.log(msg);
       setTexts((oldTexts) => [...oldTexts, msg]);
     };
     socket.on("my_message", newMessageHandler);
+
+    // return () => {
+    //   socket.off("my_message", newMessageHandler);
+    // };
   }, []);
 
   return (
