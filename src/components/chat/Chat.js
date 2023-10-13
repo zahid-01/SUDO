@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import styles from "./Chat.module.css";
 import ChatCard from "./ChatCard";
 import { socket } from "../../socket";
@@ -21,7 +22,6 @@ const Chat = () => {
 
   useEffect(() => {
     const newMessageHandler = (msg) => {
-      console.log(msg);
       setTexts((oldTexts) => [...oldTexts, msg]);
     };
     socket.on("my_message", newMessageHandler);
