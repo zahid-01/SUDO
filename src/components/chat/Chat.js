@@ -15,7 +15,7 @@ const Chat = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (message.trim() !== "") {
-      socket.emit("chat message", message);
+      socket.emit("private_message", message, "hadi@sudo.com");
       setMessage("");
     }
   };
@@ -24,11 +24,11 @@ const Chat = () => {
     const newMessageHandler = (msg) => {
       setTexts((oldTexts) => [...oldTexts, msg]);
     };
-    socket.on("my_message", newMessageHandler);
+    socket.on("privateMessage", newMessageHandler);
 
-    // return () => {
-    //   socket.off("my_message", newMessageHandler);
-    // };
+    return () => {
+      socket.off("my_message", newMessageHandler);
+    };
   }, []);
 
   return (
