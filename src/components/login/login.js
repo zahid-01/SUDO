@@ -22,7 +22,8 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios({
+    let res = {};
+    res = await axios({
       method: "POST",
       url: `${API_BASE_URL}/api/v1/login`,
       data: {
@@ -32,6 +33,7 @@ const LoginPage = () => {
       withCredentials: true,
     }).catch((e) => {
       setLoginError(true);
+      console.log(e);
       return;
     });
 
