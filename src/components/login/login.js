@@ -20,8 +20,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let res = {};
-    res = await axios({
+    await axios({
       method: "POST",
       url: `${API_BASE_URL}/api/v1/login`,
       data: {
@@ -29,16 +28,18 @@ const LoginPage = () => {
         password,
       },
       withCredentials: true,
-    }).catch((e) => {
-      setLoginError(true);
-      console.log(e);
-      return;
-    });
-
-    if (res.data.status === "Success") {
-      socketConnect(res.data.token);
-      navigate("/chat");
-    }
+    })
+      .then((res) => {
+        if (res.data.status === "Success") {
+          socketConnect(res.data.token);
+          navigate("/chat");
+        }
+      })
+      .catch((e) => {
+        setLoginError(true);
+        console.log(e);
+        return;
+      });
   };
   return (
     <div className="min-h-screen flex flex-col gap-10  items-center justify-center lg:grid lg:grid-cols-2 lg:place-items-center bg-zinc-100 p-4">
