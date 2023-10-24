@@ -101,10 +101,12 @@ const Chat = () => {
 
   const fetchUserList = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/v1/me`);
+      const response = await axios.get(`${API_BASE_URL}/api/v1/users/chats`, {
+        withCredentials: true,
+      });
       console.log(response);
-      if (response.data.status === "success") {
-        setUserList(response.chats.chatHistory);
+      if (response.data.status === "Success") {
+        setUserList(response.data.chats.chatHistory);
       } else {
         console.error("API failure:", response.data.message);
       }
@@ -142,7 +144,14 @@ const Chat = () => {
     <div className="flex h-screen">
       <div className="w-1/4 bg-gray-100 border-r border-gray-200 p-4">
         {userList.map((user, index) => (
-          <ChatCard key={index} chatInfo={user} chatWindow={setChatWindow} />
+          <ChatCard
+            key={index}
+            chatInfo={{
+              userName: user._id,
+              lastMessage: user.messages,
+            }}
+            chatWindow={setChatWindow}
+          />
         ))}
       </div>
       <div className="w-3/4 p-4 flex flex-col bg-white">

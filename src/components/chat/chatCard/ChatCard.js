@@ -11,7 +11,22 @@ function ChatCard(props) {
       </div>
       <div className="ml-4">
         <h3 className="text-xl font-semibold">{props.chatInfo.userName}</h3>
-        <p className="text-gray-500">{props.chatInfo.lastMessage}</p>
+        <p className="text-gray-500">
+          {props.chatInfo.lastMessage ? (
+            props.chatInfo.lastMessage.map((message, index) => (
+              <div
+                key={index}
+                className="bg-green-200 text-black p-2 rounded-lg mb-2 max-w-2/3 mx-auto"
+              >
+                <div className="font-semibold">{message.sender}:</div>
+                <div>{message.message}</div>
+                <div className="text-sm text-gray-600">{message.timestamp}</div>
+              </div>
+            ))
+          ) : (
+            <span>No messages available</span>
+          )}
+        </p>
       </div>
     </div>
   );
