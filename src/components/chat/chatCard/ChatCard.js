@@ -11,6 +11,8 @@ function ChatCard(props) {
       </div>
       <div className="ml-4">
         <h3 className="text-xl font-semibold">{props.chatInfo.userName}</h3>
+        <p>{new Date().toLocaleTimeString()}</p>
+
         {/* <p className="text-gray-500">
           {props.chatInfo.lastMessage ? (
             props.chatInfo.lastMessage.map((message, index) => (
