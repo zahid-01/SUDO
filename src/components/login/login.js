@@ -44,7 +44,7 @@ const LoginPage = () => {
           dispatch(loginSliceActions.setLogin(true));
           dispatch(loginSliceActions.setUserInfo(res.data.userData));
           socketConnect(res.data.token);
-          navigate("/chat");
+          navigate("/");
         }
         if (res.status === 203) {
           setLoginError(true);
