@@ -1,14 +1,21 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import API_BASE_URL from "../../config/api";
 import loginSliceActions from "../Store/loginSlice";
 import logo from "../Imgs/sudo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faSearch,
+  faBars,
+  faUserFriends,
+  faClose,
+  faMessage,
+} from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import API_BASE_URL from "../../config/api";
 
-const Navbar = (props) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoggedIn, userInfo } = useSelector((state) => state.login);
@@ -20,15 +27,14 @@ const Navbar = (props) => {
 
   const logoutHandler = async () => {
     await axios({
-      method: "POST",
-      url: `${API_BASE_URL}/api/v1/login`,
-      withCredentials: true,
+      method: "GET",
+      url: `${API_BASE_URL}/api/v1/logout`,
     })
       .then((res) => {
         if (res.data.status === "Success") {
           dispatch(loginSliceActions.setLogin(false));
           dispatch(loginSliceActions.setUserInfo(null));
-          navigate("/");
+          navigate("/signin");
         }
       })
       .catch(() => {
@@ -37,100 +43,98 @@ const Navbar = (props) => {
   };
 
   return (
-    <nav className="shadow-md shadow-blue-300 p-2 mb-4 w-full">
-      <div className="lg:ml-4 flex justify-between items-center">
-        <div className="flex gap-4 items-center">
-          <Link to="/" className="text-white text-xl font-bold">
-            <img src={logo} alt="logo" className="w-12 h-12 lg:w-24 lg:h-24" />
+    <nav className="shadow-md p-2">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="flex items-center">
+          <Link to="/" className="text-2xl font-semibold">
+            <img src={logo} alt="logo" className="w-12 h-12 lg:w-16 lg:h-16" />
           </Link>
-          <div className="ml-4">
+          <div className="ml-4 hidden md:block">
             <input
               type="text"
               placeholder="Search..."
-              className="px-2 py-1 rounded border border-gray-400"
+              className="px-2 py-1 rounded-full border border-gray-400 w-64"
             />
-            <button className="bg-blue-500 text-white px-2 py-2 tracking-wider rounded-full font-semibold ml-2 hidden lg:inline">
-              Search
+            <FontAwesomeIcon icon={faSearch} className="ml-4 w-6 h-6 " />
+          </div>
+        </div>
+
+        <div className="hidden md:block space-x-12 bg-gray-200 p-4 rounded-lg ">
+          <Link
+            to="/"
+            className="text-blue-500 hover:text-blue-600 transition-all duration-300"
+          >
+            <FontAwesomeIcon icon={faHome} size="2x" />
+          </Link>
+          <Link
+            to="/chat"
+            className="text-blue-500 hover:text-blue-600 transition-all duration-300"
+          >
+            <FontAwesomeIcon icon={faMessage} size="2x" />
+          </Link>
+          <Link
+            to="/friends"
+            className="text-blue-500 hover:text-blue-600 transition-all duration-300"
+          >
+            <FontAwesomeIcon icon={faUserFriends} size="2x" />
+          </Link>
+        </div>
+
+        <div className="hidden md:block flex items-center">
+          {isLoggedIn && (
+            <div className="ml-4">
+              <Link to="/chat" className="font-semibold">
+                {userInfo}
+              </Link>
+            </div>
+          )}
+
+          <div className="ml-4">
+            <button
+              onClick={logoutHandler}
+              className="font-bold text-lg bg-blue-300 p-2 rounded transition-all duration-300 tracking-wider text-red-900 hover:bg-blue-400"
+            >
+              Logout
             </button>
           </div>
         </div>
-        <div className="lg:hidden">
-          <button
-            className="text-black"
-            onClick={toggleMenu}
-            aria-label={menuOpen ? "Close Menu" : "Open Menu"}
-          >
+
+        <div className="md:hidden">
+          <button onClick={toggleMenu} className="text-blue-500">
             {menuOpen ? (
-              <FontAwesomeIcon
-                icon={faClose}
-                className="w-6 h-6 md:w-8 md:h-8"
-              />
+              <FontAwesomeIcon icon={faClose} size="2x" />
             ) : (
-              <FontAwesomeIcon
-                icon={faBars}
-                className="w-6 h-6 md:w-8 md:h-8"
-              />
+              <FontAwesomeIcon icon={faBars} size="2x" />
             )}
           </button>
         </div>
-        {menuOpen && (
-          <div className="lg:hidden py-2 text-center tracking-wider">
-            <div className="flex flex-col space-y-4">
-              <Link
-                to="/"
-                className="text-white font-bold bg-blue-500 p-4 rounded hover:bg-blue-600"
-              >
-                Home
-              </Link>
-              <Link
-                to="/chat"
-                className="text-white font-bold bg-blue-500 p-4 rounded hover:bg-blue-600"
-              >
-                Chat
-              </Link>
-            </div>
-          </div>
-        )}
+      </div>
 
-        {menuOpen && (
-          <div className="lg:hidden py-2 text-center tracking-wider">
-            <div className="flex flex-col space-y-4"></div>
-          </div>
-        )}
-
-        <div className="hidden lg:flex space-x-6">
-          <Link
-            to="/"
-            className="text-white font-bold bg-blue-500 p-4 rounded hover:bg-blue-600"
-          >
-            Home
-          </Link>
-
-          <Link
-            to="/chat"
-            className="text-white font-bold bg-blue-500 p-4 rounded hover:bg-blue-600"
-          >
-            Chat
-          </Link>
-        </div>
-        <div className="flex items-center">
-          <ul className="flex space-x-4">
+      {menuOpen && (
+        <div className="md:hidden p-4">
+          <div className="flex flex-col space-y-2 items-center font-bold tracking-wider">
+            <Link to="/" className="text-blue-500 ">
+              <FontAwesomeIcon icon={faHome} />
+            </Link>
+            <Link to="/chat" className="text-blue-500">
+              <FontAwesomeIcon icon={faMessage} />
+            </Link>
             {isLoggedIn && (
-              <li>
-                <Link to="/chat" className="text-black font-bold">
+              <div className="ml-4">
+                <Link to="/chat" className="font-semibold">
                   {userInfo}
                 </Link>
-                <button
-                  onClick={logoutHandler}
-                  className="bg-blue-500 text-black px-2 py-1 rounded-full font-semibold hover:bg-red-500 ml-2"
-                >
-                  Logout
-                </button>
-              </li>
+              </div>
             )}
-          </ul>
+            <button
+              onClick={logoutHandler}
+              className="font-bold text-lg bg-blue-300 p-2 rounded transition-all duration-300 tracking-wider text-red-900 hover:bg-blue-400"
+            >
+              Logout
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 };

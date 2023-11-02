@@ -18,7 +18,6 @@ const Post = ({ post }) => {
     let commentData;
     if (newComment.trim() !== "") {
       commentData = newComment;
-      setComments([...comments, { user: this, comment: commentData }]);
     }
     await axios({
       method: "POST",
@@ -28,7 +27,12 @@ const Post = ({ post }) => {
       },
       withCredentials: true,
     })
-      .then((res) => setComments(res.data.postComments))
+      .then((res) =>
+        setComments((comments) => [
+          ...comments,
+          { user: this, comment: commentData },
+        ])
+      )
       .catch((e) => console.log(e));
   };
 
