@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import loginSliceActions from "../Store/loginSlice";
+import { loginSliceActions } from "../Store/loginSlice";
 import logo from "../Imgs/sudo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,14 +20,14 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const { isLoggedIn, userInfo } = useSelector((state) => state.login);
   const [menuOpen, setMenuOpen] = useState(false);
-
+  // console.log(userInfo);
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   const logoutHandler = async () => {
     await axios({
-      method: "GET",
+      method: "POST",
       url: `${API_BASE_URL}/api/v1/logout`,
     })
       .then((res) => {
@@ -37,7 +37,8 @@ const Navbar = () => {
           navigate("/signin");
         }
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e);
         alert("Oops! Something went wrong 😥");
       });
   };
@@ -82,21 +83,22 @@ const Navbar = () => {
 
         <div className="hidden md:block flex items-center">
           {isLoggedIn && (
-            <div className="ml-4">
-              <Link to="/chat" className="font-semibold">
-                {userInfo}
-              </Link>
-            </div>
+            <>
+              <div className="ml-4">
+                <Link to="/chat" className="font-semibold">
+                  {userInfo}
+                </Link>
+              </div>
+              <div className="ml-4">
+                <button
+                  onClick={logoutHandler}
+                  className="font-bold text-lg bg-blue-300 p-2 rounded transition-all duration-300 tracking-wider text-red-900 hover:bg-blue-400"
+                >
+                  Logout
+                </button>
+              </div>
+            </>
           )}
-
-          <div className="ml-4">
-            <button
-              onClick={logoutHandler}
-              className="font-bold text-lg bg-blue-300 p-2 rounded transition-all duration-300 tracking-wider text-red-900 hover:bg-blue-400"
-            >
-              Logout
-            </button>
-          </div>
         </div>
 
         <div className="md:hidden">
