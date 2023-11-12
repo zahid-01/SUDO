@@ -20,7 +20,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const { isLoggedIn, userInfo } = useSelector((state) => state.login);
   const [menuOpen, setMenuOpen] = useState(false);
-  // console.log(userInfo);
+  console.log(userInfo);
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -47,7 +47,7 @@ const Navbar = () => {
     <nav className="shadow-md p-2">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
-          <Link to="/" className="text-2xl font-semibold">
+          <Link to="/signin" className="text-2xl font-semibold">
             <img src={logo} alt="logo" className="w-12 h-12 lg:w-16 lg:h-16" />
           </Link>
           <div className="ml-4 hidden md:block">

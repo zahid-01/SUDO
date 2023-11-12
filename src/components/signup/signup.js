@@ -63,7 +63,7 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="bg-white my-6 p-6 rounded-lg shadow-md container mx-auto lg:w-1/3">
+    <div className="bg-gray-100 my-6 h-[90vh] p-6 rounded-lg shadow-md container mx-auto lg:w-1/3">
       <img src={img} alt="logo" className="w-14 h-14 lg:w-24 lg:h-24 mx-auto" />
       <h2 className="bg-gradient-to-r from-blue-500 to-orange-500 bg-clip-text text-transparent text-4xl text-center font-extrabold text-gray-800 mb-6 p-2">
         Sign Up
@@ -140,7 +140,7 @@ const SignupForm = () => {
         to="/signin"
         className="text-xl font-semibold flex mt-4 text-green-700 tracking-wider hover:text-green-900"
       >
-        already have a account?
+        Already have a account?
       </Link>
     </div>
   );

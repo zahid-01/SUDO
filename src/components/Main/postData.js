@@ -9,7 +9,7 @@ const PostData = () => {
   useEffect(() => {
     const getData = async () => {
       await axios
-        .get(`${API_BASE_URL}/api/v1/userPost`, { withCredentials: true })
+        .get(`${API_BASE_URL}/api/v1/userPost/feed`, { withCredentials: true })
         .then((response) => {
           const apiPosts = response.data.posts;
           setPosts(apiPosts);

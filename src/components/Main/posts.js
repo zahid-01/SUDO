@@ -1,4 +1,4 @@
-import { faComment } from "@fortawesome/free-solid-svg-icons";
+import { faComment, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useState } from "react";
@@ -7,7 +7,7 @@ import Like from "./Like";
 import Share from "./share";
 import Comment from "./comment";
 
-const Post = ({ post }) => {
+const Post = ({ post, setFriendRequests }) => {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(post.postLikes.length);
   const [showComments, setShowComments] = useState(false);
@@ -27,7 +27,7 @@ const Post = ({ post }) => {
       },
       withCredentials: true,
     })
-      .then((res) =>
+      .then(() =>
         setComments((comments) => [
           ...comments,
           { user: this, comment: commentData },
@@ -65,12 +65,15 @@ const Post = ({ post }) => {
           />
           <div>
             <span className="font-semibold text-lg md:text-xl lg:text-2xl">
-              {post.userId}
+              {post.userId.name}
             </span>
             <p className="text-gray-500">{regularTime}</p>
           </div>
         </div>
-        <button className="text-gray-600 hover:text-blue-500">Options</button>
+
+        <button className={`text-gray-600 hover:text-blue-500 `}>
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
       </div>
       <p className="mt-2 text-xl md:text-base lg:text-xl">{post.postText}</p>
       <img
