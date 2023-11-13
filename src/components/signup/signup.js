@@ -45,7 +45,6 @@ const SignupForm = () => {
           email,
           password,
         });
-        console.log(res);
         if (res.data.status === "Success") {
           socketConnect(res.data.token);
           setSignUpSuccess("Signup successfull! You can now login.");

@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FriendRequests from "../Friends/friendrequest";
 import Friends from "../Friends/friends";
 import Navbar from "../Navbar/Navbar";
+import axios from "axios";
 
 import PostData from "../Main/postData";
 import PostForm from "./AddPost";
 import Sidebar from "../Sidebar/Sidebar";
+
+axios.defaults.withCredentials = true;
 
 const LandingPage = () => {
   return (

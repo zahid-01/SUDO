@@ -13,7 +13,6 @@ const PostData = () => {
         .then((response) => {
           const apiPosts = response.data.posts;
           setPosts(apiPosts);
-          console.log(apiPosts);
         })
         .catch((error) => {
           console.error("Error fetching data from the API: " + error);

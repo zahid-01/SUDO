@@ -40,7 +40,6 @@ const Chat = () => {
   const setChatWindow = (userName) => {
     setCurrentChat(userName);
   };
-  console.log(currentChat);
   useEffect(() => {
     const newMessageHandler = (msg) => {
       setTexts((oldTexts) => [...oldTexts, msg]);

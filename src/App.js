@@ -13,8 +13,8 @@ import Footer from "./components/Footer/Footer";
 
 axios.defaults.withCredentials = true;
 const router = createBrowserRouter([
-  { path: "/", element: <LandingPage /> },
-  { path: "/signin", element: <LoginPage /> },
+  { path: "/", element: <LoginPage /> },
+  { path: "/myPage", element: <LandingPage /> },
   { path: "/signup", element: <SignupForm /> },
   { path: "/chat", element: <Chat /> },
 ]);
@@ -30,13 +30,13 @@ const App = () => {
         .then((res) => {
           if (res.status === 200) {
             dispatch(loginSliceActions.setLogin(true));
-            dispatch(loginSliceActions.setUserInfo(res.data.userData));
+            dispatch(loginSliceActions.setUserInfo(res.data.user.name));
           } else {
             dispatch(loginSliceActions.setLogin(false));
             dispatch(loginSliceActions.setUserInfo(null));
           }
         })
-        .catch((e) => console.log(e));
+        .catch((e) => {});
     };
 
     checkLoginState();

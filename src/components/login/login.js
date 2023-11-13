@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import API_BASE_URL from "../../config/api";
@@ -29,6 +29,29 @@ const LoginPage = () => {
     setPassword(e.target.value);
   };
 
+  useEffect(() => {
+    const checkLoginState = async () => {
+      await axios({
+        method: "GET",
+        url: `${API_BASE_URL}/api/v1/isLoggedIn`,
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            dispatch(loginSliceActions.setLogin(true));
+            dispatch(loginSliceActions.setUserInfo(res.data.user.name));
+            socketConnect(res.data.token);
+            navigate("/myPage");
+          } else if (res.response.status === 401) {
+            dispatch(loginSliceActions.setLogin(false));
+            dispatch(loginSliceActions.setUserInfo(null));
+          }
+        })
+        .catch((e) => {});
+    };
+
+    checkLoginState();
+  }, [dispatch, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios({
@@ -45,7 +68,7 @@ const LoginPage = () => {
           dispatch(loginSliceActions.setLogin(true));
           dispatch(loginSliceActions.setUserInfo(res.data.userData));
           socketConnect(res.data.token);
-          navigate("/");
+          navigate("/myPage");
         }
         if (res.status === 203) {
           setLoginError(true);
@@ -58,7 +81,6 @@ const LoginPage = () => {
       })
       .catch((e) => {
         setLoginError(true);
-        console.log(e);
         return;
       });
   };

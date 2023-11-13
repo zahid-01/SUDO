@@ -20,7 +20,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const { isLoggedIn, userInfo } = useSelector((state) => state.login);
   const [menuOpen, setMenuOpen] = useState(false);
-  console.log(userInfo);
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -86,7 +85,7 @@ const Navbar = () => {
             <>
               <div className="ml-4">
                 <Link to="/chat" className="font-semibold">
-                  {userInfo}
+                  {userInfo?.toUpperCase()}
                 </Link>
               </div>
               <div className="ml-4">
