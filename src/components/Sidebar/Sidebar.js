@@ -7,16 +7,20 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
 
 function Sidebar() {
+  const { userInfo } = useSelector((state) => state.login);
   return (
     <div className="bg-gray-400 h-screen overflow-y-auto">
       <div className="p-4">
         <div className="flex items-center space-x-2">
           <div className="h-10 w-10 bg-white rounded-full"></div>
           <div className="text-white">
-            <p className="font-bold tracking-wider">Tiger</p>
-            <p className="text-sm">@Tiger123</p>
+            <p className="font-bold uppercase text-black tracking-wider">
+              {userInfo}
+            </p>
+            <p className="text-sm">@{userInfo}</p>
           </div>
         </div>
         <a

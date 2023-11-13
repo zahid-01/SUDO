@@ -18,7 +18,7 @@ const Footer = () => {
     <footer className="bg-blue-400 text-white py-6">
       <div className="container mx-auto lg:flex items-center lg:justify-between p-4">
         <div className="flex items-center mb-4 justify-center">
-          <a href="/signin">
+          <a href="/">
             <img src={sudo} alt="Your Logo" className="w-12 h-12 mr-2" />
           </a>
           <h1 className="text-2xl font-bold tracking-wider">SUDO ❤</h1>

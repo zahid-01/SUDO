@@ -33,7 +33,7 @@ const Navbar = () => {
         if (res.data.status === "Success") {
           dispatch(loginSliceActions.setLogin(false));
           dispatch(loginSliceActions.setUserInfo(null));
-          navigate("/signin");
+          navigate("/");
         }
       })
       .catch((e) => {
@@ -46,7 +46,7 @@ const Navbar = () => {
     <nav className="shadow-md p-2">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
-          <Link to="/signin" className="text-2xl font-semibold">
+          <Link to="/" className="text-2xl font-semibold">
             <img src={logo} alt="logo" className="w-12 h-12 lg:w-16 lg:h-16" />
           </Link>
           <div className="ml-4 hidden md:block">
@@ -83,18 +83,20 @@ const Navbar = () => {
         <div className="hidden md:block flex items-center">
           {isLoggedIn && (
             <>
-              <div className="ml-4">
-                <Link to="/chat" className="font-semibold">
-                  {userInfo?.toUpperCase()}
-                </Link>
-              </div>
-              <div className="ml-4">
-                <button
-                  onClick={logoutHandler}
-                  className="font-bold text-lg bg-blue-300 p-2 rounded transition-all duration-300 tracking-wider text-red-900 hover:bg-blue-400"
-                >
-                  Logout
-                </button>
+              <div className="flex items-center">
+                <div className="ml-4">
+                  <span className="font-bold tracking-widest">
+                    {userInfo?.toUpperCase()}
+                  </span>
+                </div>
+                <div className="ml-4">
+                  <button
+                    onClick={logoutHandler}
+                    className="font-bold text-lg bg-blue-300 p-2 rounded transition-all duration-300 tracking-wider text-red-900 hover:bg-blue-400"
+                  >
+                    Logout
+                  </button>
+                </div>
               </div>
             </>
           )}

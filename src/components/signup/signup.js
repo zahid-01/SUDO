@@ -136,7 +136,7 @@ const SignupForm = () => {
       </button>
       <hr className="mt-6" />
       <Link
-        to="/signin"
+        to="/"
         className="text-xl font-semibold flex mt-4 text-green-700 tracking-wider hover:text-green-900"
       >
         Already have a account?
